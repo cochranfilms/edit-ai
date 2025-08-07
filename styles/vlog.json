@@ -1,0 +1,113 @@
+{
+  "style": "vlog",
+  "name": "Vlog",
+  "description": "Fast-paced, energetic editing perfect for YouTube and social media",
+  "version": "1.0",
+  
+  "pacing": {
+    "type": "energetic",
+    "average_shot_duration": 1.8,
+    "variation_range": [0.5, 4.0],
+    "rhythm": "fast-paced"
+  },
+  
+  "transitions": [
+    {
+      "type": "jump-cut",
+      "duration": 0.0,
+      "frequency": 0.4,
+      "description": "Quick jump cuts for energy"
+    },
+    {
+      "type": "cross-dissolve",
+      "duration": 0.3,
+      "frequency": 0.3,
+      "description": "Quick dissolves for smooth flow"
+    },
+    {
+      "type": "slide-transition",
+      "duration": 0.5,
+      "frequency": 0.2,
+      "description": "Dynamic slide transitions"
+    },
+    {
+      "type": "zoom-transition",
+      "duration": 0.4,
+      "frequency": 0.1,
+      "description": "Zoom effects for emphasis"
+    }
+  ],
+  
+  "effects": [
+    {
+      "type": "color-grading",
+      "preset": "vibrant-look",
+      "intensity": 0.6,
+      "description": "Bright, vibrant colors for social media"
+    },
+    {
+      "type": "text-overlay",
+      "style": "modern",
+      "font": "Arial Bold",
+      "description": "Modern text overlays for context"
+    },
+    {
+      "type": "motion-graphics",
+      "style": "minimal",
+      "description": "Clean motion graphics"
+    },
+    {
+      "type": "stabilization",
+      "intensity": 0.7,
+      "description": "Smooth camera stabilization"
+    }
+  ],
+  
+  "audio": {
+    "background_music": {
+      "type": "upbeat",
+      "volume": -25,
+      "fade_in": 1.0,
+      "fade_out": 2.0
+    },
+    "voice_over": {
+      "volume": -3,
+      "compression": true,
+      "noise_reduction": true,
+      "de-essing": true
+    },
+    "sound_effects": {
+      "volume": -15,
+      "types": ["whoosh", "pop", "ding"]
+    }
+  },
+  
+  "composition": {
+    "rule_of_thirds": true,
+    "close_ups": 0.3,
+    "medium_shots": 0.5,
+    "wide_shots": 0.2,
+    "movement": "dynamic"
+  },
+  
+  "export_settings": {
+    "format": "H.264",
+    "resolution": "1920x1080",
+    "frame_rate": 30,
+    "bitrate": "8 Mbps",
+    "audio": "AAC, 256 kbps"
+  },
+  
+  "workflow": [
+    "analyze_media",
+    "create_project",
+    "import_footage",
+    "stabilize_footage",
+    "apply_color_grading",
+    "add_transitions",
+    "insert_text_overlays",
+    "add_sound_effects",
+    "mix_audio",
+    "export_final"
+  ]
+}

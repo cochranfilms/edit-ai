@@ -1,0 +1,104 @@
+{
+  "style": "cinematic",
+  "name": "Cinematic",
+  "description": "Film-like editing with dramatic pacing and cinematic effects",
+  "version": "1.0",
+  
+  "pacing": {
+    "type": "dramatic",
+    "average_shot_duration": 3.5,
+    "variation_range": [2.0, 6.0],
+    "rhythm": "slow-build"
+  },
+  
+  "transitions": [
+    {
+      "type": "cross-dissolve",
+      "duration": 1.0,
+      "frequency": 0.7,
+      "description": "Smooth cross-dissolve for scene changes"
+    },
+    {
+      "type": "dip-to-black",
+      "duration": 0.5,
+      "frequency": 0.2,
+      "description": "Dramatic black transition for major scene changes"
+    },
+    {
+      "type": "fade-in",
+      "duration": 1.5,
+      "frequency": 0.1,
+      "description": "Slow fade-in for opening shots"
+    }
+  ],
+  
+  "effects": [
+    {
+      "type": "color-grading",
+      "preset": "cinematic-look",
+      "intensity": 0.8,
+      "description": "Film-like color grading with warm tones"
+    },
+    {
+      "type": "film-grain",
+      "intensity": 0.3,
+      "description": "Subtle film grain for authenticity"
+    },
+    {
+      "type": "letterbox",
+      "aspect_ratio": "2.35:1",
+      "description": "Cinematic letterboxing"
+    },
+    {
+      "type": "vignette",
+      "intensity": 0.4,
+      "description": "Subtle vignette for focus"
+    }
+  ],
+  
+  "audio": {
+    "background_music": {
+      "type": "cinematic-score",
+      "volume": -20,
+      "fade_in": 3.0,
+      "fade_out": 5.0
+    },
+    "voice_over": {
+      "volume": -6,
+      "compression": true,
+      "noise_reduction": true
+    },
+    "ambient_sound": {
+      "volume": -30,
+      "crossfade": true
+    }
+  },
+  
+  "composition": {
+    "rule_of_thirds": true,
+    "leading_lines": true,
+    "symmetry": false,
+    "depth_of_field": "shallow"
+  },
+  
+  "export_settings": {
+    "format": "H.264",
+    "resolution": "1920x1080",
+    "frame_rate": 24,
+    "bitrate": "10 Mbps",
+    "audio": "AAC, 320 kbps"
+  },
+  
+  "workflow": [
+    "analyze_media",
+    "create_project",
+    "import_footage",
+    "organize_bins",
+    "apply_color_grading",
+    "add_transitions",
+    "adjust_pacing",
+    "add_effects",
+    "mix_audio",
+    "export_final"
+  ]
+}

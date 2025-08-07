@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Video Editor - Style Selector</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .style-selector {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .style-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .style-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .style-card.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .style-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .style-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .style-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .file-selector {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .file-input-group {
+            margin-bottom: 20px;
+        }
+
+        .file-input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .file-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .file-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .folder-selector {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .folder-selector:hover {
+            border-color: #667eea;
+            background: #e3f2fd;
+        }
+
+        .folder-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .status-message {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎬 AI Video Editor</h1>
+            <p>World's First Automated Premiere Pro Editing System</p>
+        </div>
+
+        <div class="main-content">
+            <div class="style-selector">
+                <h2 class="section-title">Choose Your Editing Style</h2>
+                <div class="style-grid">
+                    <div class="style-card" data-style="cinematic">
+                        <div class="style-icon">🎭</div>
+                        <div class="style-name">Cinematic</div>
+                        <div class="style-description">Film-like editing with dramatic pacing</div>
+                    </div>
+                    <div class="style-card" data-style="vlog">
+                        <div class="style-icon">📱</div>
+                        <div class="style-name">Vlog</div>
+                        <div class="style-description">Fast-paced, energetic for social media</div>
+                    </div>
+                    <div class="style-card" data-style="corporate">
+                        <div class="style-icon">💼</div>
+                        <div class="style-name">Corporate</div>
+                        <div class="style-description">Professional, clean transitions</div>
+                    </div>
+                    <div class="style-card" data-style="music-video">
+                        <div class="style-icon">🎵</div>
+                        <div class="style-name">Music Video</div>
+                        <div class="style-description">Beat-synced editing</div>
+                    </div>
+                    <div class="style-card" data-style="documentary">
+                        <div class="style-icon">📹</div>
+                        <div class="style-name">Documentary</div>
+                        <div class="style-description">Narrative-driven pacing</div>
+                    </div>
+                    <div class="style-card" data-style="social-media">
+                        <div class="style-icon">📲</div>
+                        <div class="style-name">Social Media</div>
+                        <div class="style-description">Short, engaging clips</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="file-selector">
+                <h2 class="section-title">Select Your Media</h2>
+                
+                <div class="file-input-group">
+                    <label for="media-folder">Media Folder:</label>
+                    <input type="file" id="media-folder" class="file-input" webkitdirectory directory multiple>
+                </div>
+
+                <div class="file-input-group">
+                    <label for="output-path">Output Path:</label>
+                    <input type="text" id="output-path" class="file-input" placeholder="/path/to/output/video.mp4">
+                </div>
+
+                <div class="folder-selector" onclick="document.getElementById('media-folder').click()">
+                    <div class="folder-icon">📁</div>
+                    <div>Click to select media folder</div>
+                    <div style="font-size: 0.9rem; opacity: 0.7; margin-top: 10px;">
+                        Supports: MP4, MOV, AVI, M4V, MKV, WAV, MP3, AAC
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-section" id="progress-section" style="display: none;">
+            <h2 class="section-title">Editing Progress</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-text" id="progress-text">Initializing...</div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-primary" id="start-editing">🚀 Start Automated Editing</button>
+            <button class="btn btn-secondary" id="preview-style">👁️ Preview Style</button>
+            <button class="btn btn-secondary" id="reset-all">🔄 Reset</button>
+        </div>
+
+        <div id="status-message"></div>
+    </div>
+
+    <script>
+        let selectedStyle = null;
+        let selectedFiles = [];
+
+        // Style selection
+        document.querySelectorAll('.style-card').forEach(card => {
+            card.addEventListener('click', () => {
+                // Remove previous selection
+                document.querySelectorAll('.style-card').forEach(c => c.classList.remove('selected'));
+                
+                // Select new style
+                card.classList.add('selected');
+                selectedStyle = card.dataset.style;
+                
+                showStatus(`Selected style: ${card.querySelector('.style-name').textContent}`, 'info');
+            });
+        });
+
+        // File selection
+        document.getElementById('media-folder').addEventListener('change', (e) => {
+            selectedFiles = Array.from(e.target.files);
+            showStatus(`Selected ${selectedFiles.length} files`, 'info');
+        });
+
+        // Start editing
+        document.getElementById('start-editing').addEventListener('click', () => {
+            if (!selectedStyle) {
+                showStatus('Please select an editing style first!', 'error');
+                return;
+            }
+
+            if (selectedFiles.length === 0) {
+                showStatus('Please select media files first!', 'error');
+                return;
+            }
+
+            const outputPath = document.getElementById('output-path').value;
+            if (!outputPath) {
+                showStatus('Please specify an output path!', 'error');
+                return;
+            }
+
+            startAutomatedEditing(selectedStyle, selectedFiles, outputPath);
+        });
+
+        // Preview style
+        document.getElementById('preview-style').addEventListener('click', () => {
+            if (!selectedStyle) {
+                showStatus('Please select an editing style first!', 'error');
+                return;
+            }
+
+            previewStyle(selectedStyle);
+        });
+
+        // Reset all
+        document.getElementById('reset-all').addEventListener('click', () => {
+            resetAll();
+        });
+
+        function startAutomatedEditing(style, files, outputPath) {
+            showStatus('Starting automated editing process...', 'info');
+            
+            // Show progress section
+            document.getElementById('progress-section').style.display = 'block';
+            
+            // Simulate progress (in real implementation, this would connect to Premiere Pro)
+            simulateProgress();
+            
+            // In a real implementation, this would call the ExtendScript
+            setTimeout(() => {
+                showStatus('🎉 Automated editing completed! Video saved to: ' + outputPath, 'success');
+                hideProgress();
+            }, 5000);
+        }
+
+        function simulateProgress() {
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-text');
+            const steps = [
+                'Initializing Premiere Pro...',
+                'Creating project...',
+                'Importing media...',
+                'Applying style effects...',
+                'Adding transitions...',
+                'Mixing audio...',
+                'Exporting final video...'
+            ];
+            
+            let currentStep = 0;
+            const interval = setInterval(() => {
+                const progress = (currentStep / (steps.length - 1)) * 100;
+                progressFill.style.width = progress + '%';
+                progressText.textContent = steps[currentStep];
+                
+                currentStep++;
+                if (currentStep >= steps.length) {
+                    clearInterval(interval);
+                }
+            }, 700);
+        }
+
+        function previewStyle(style) {
+            const styleInfo = {
+                'cinematic': {
+                    name: 'Cinematic',
+                    description: 'Film-like editing with dramatic pacing, cross-dissolves, and cinematic color grading.',
+                    features: ['Dramatic pacing', 'Cross-dissolves', 'Film grain', 'Letterboxing', 'Cinematic color grading']
+                },
+                'vlog': {
+                    name: 'Vlog',
+                    description: 'Fast-paced, energetic editing perfect for YouTube and social media.',
+                    features: ['Jump cuts', 'Quick dissolves', 'Vibrant colors', 'Text overlays', 'Stabilization']
+                },
+                'corporate': {
+                    name: 'Corporate',
+                    description: 'Professional, clean editing for business presentations.',
+                    features: ['Clean transitions', 'Professional color grading', 'Smooth pacing', 'Clear audio mixing']
+                }
+            };
+
+            const info = styleInfo[style] || styleInfo['cinematic'];
+            
+            showStatus(`Style Preview: ${info.name} - ${info.description}`, 'info');
+        }
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status-message');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message status-${type}`;
+            statusDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        function hideProgress() {
+            document.getElementById('progress-section').style.display = 'none';
+        }
+
+        function resetAll() {
+            // Reset style selection
+            document.querySelectorAll('.style-card').forEach(c => c.classList.remove('selected'));
+            selectedStyle = null;
+            
+            // Reset file selection
+            document.getElementById('media-folder').value = '';
+            selectedFiles = [];
+            
+            // Reset output path
+            document.getElementById('output-path').value = '';
+            
+            // Hide progress
+            hideProgress();
+            
+            showStatus('All selections reset!', 'info');
+        }
+
+        // Initialize
+        showStatus('Welcome to AI Video Editor! Select a style and media files to begin.', 'info');
+    </script>
+</body>
+</html>

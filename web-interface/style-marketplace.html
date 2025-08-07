@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit.ai Style Marketplace</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --dark-bg: #0f172a;
+            --darker-bg: #020617;
+            --card-bg: rgba(30, 41, 59, 0.8);
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 25px 50px rgba(0,0,0,0.4);
+            --glow: 0 0 40px rgba(99, 102, 241, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .marketplace-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .style-card {
+            background: var(--card-bg);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .style-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-color);
+        }
+
+        .style-card.featured {
+            border-color: var(--accent-color);
+            background: linear-gradient(135deg, var(--card-bg), rgba(245, 158, 11, 0.1));
+        }
+
+        .style-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .style-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .style-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .style-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .style-features li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .style-features li i {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        .style-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .style-creator {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+        }
+
+        .btn-secondary {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .stats-section {
+            background: var(--card-bg);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 25px;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .marketplace-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-store"></i> Edit.ai Style Marketplace</h1>
+            <p>Discover and purchase professional editing styles from top creators. Transform your videos with AI-powered automation.</p>
+        </div>
+
+        <div class="stats-section">
+            <h2>Marketplace Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalStyles">2</div>
+                    <div class="stat-label">Available Styles</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalCreators">5</div>
+                    <div class="stat-label">Active Creators</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalSales">127</div>
+                    <div class="stat-label">Style Sales</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="avgRating">4.8</div>
+                    <div class="stat-label">Average Rating</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All Styles</button>
+            <button class="filter-btn" data-filter="cinematic">Cinematic</button>
+            <button class="filter-btn" data-filter="vlog">Vlog</button>
+            <button class="filter-btn" data-filter="corporate">Corporate</button>
+            <button class="filter-btn" data-filter="music-video">Music Video</button>
+            <button class="filter-btn" data-filter="documentary">Documentary</button>
+        </div>
+
+        <div class="marketplace-grid" id="marketplaceGrid">
+            <!-- Style cards will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Sample marketplace data
+        const marketplaceStyles = [
+            {
+                id: 'cinematic-pro',
+                name: 'Cinematic Pro',
+                description: 'Professional film-like editing with dramatic pacing and cinematic effects. Perfect for short films, commercials, and artistic content.',
+                price: 149,
+                creator: 'Alex Chen',
+                category: 'cinematic',
+                featured: true,
+                rating: 4.9,
+                sales: 89,
+                features: [
+                    'Dramatic pacing and timing',
+                    'Cinematic color grading',
+                    'Film grain and letterboxing',
+                    'Professional transitions',
+                    'Audio mixing and scoring'
+                ],
+                icon: '🎭'
+            },
+            {
+                id: 'vlog-energetic',
+                name: 'Vlog Energetic',
+                description: 'Fast-paced, energetic editing perfect for YouTube and social media. Optimized for engagement and viewer retention.',
+                price: 99,
+                creator: 'Sarah Johnson',
+                category: 'vlog',
+                featured: false,
+                rating: 4.7,
+                sales: 156,
+                features: [
+                    'Quick jump cuts',
+                    'Vibrant color grading',
+                    'Text overlays and graphics',
+                    'Stabilization effects',
+                    'Upbeat audio mixing'
+                ],
+                icon: '📱'
+            },
+            {
+                id: 'corporate-clean',
+                name: 'Corporate Clean',
+                description: 'Professional, clean editing for business presentations and corporate content. Maintains credibility and clarity.',
+                price: 129,
+                creator: 'Michael Rodriguez',
+                category: 'corporate',
+                featured: false,
+                rating: 4.8,
+                sales: 67,
+                features: [
+                    'Clean, professional pacing',
+                    'Corporate color grading',
+                    'Smooth transitions',
+                    'Clear audio mixing',
+                    'Professional graphics'
+                ],
+                icon: '💼'
+            },
+            {
+                id: 'music-video-beat',
+                name: 'Music Video Beat',
+                description: 'Beat-synced editing for music videos and rhythm-based content. Perfect for musicians and music content creators.',
+                price: 179,
+                creator: 'DJ Kaya',
+                category: 'music-video',
+                featured: true,
+                rating: 4.9,
+                sales: 234,
+                features: [
+                    'Beat-sync automation',
+                    'Rhythm-based editing',
+                    'Dynamic visual effects',
+                    'Audio waveform analysis',
+                    'Music-focused transitions'
+                ],
+                icon: '🎵'
+            },
+            {
+                id: 'documentary-narrative',
+                name: 'Documentary Narrative',
+                description: 'Narrative-driven editing for documentaries and storytelling content. Focuses on story flow and emotional impact.',
+                price: 159,
+                creator: 'Emma Thompson',
+                category: 'documentary',
+                featured: false,
+                rating: 4.6,
+                sales: 45,
+                features: [
+                    'Story-driven pacing',
+                    'Interview optimization',
+                    'B-roll integration',
+                    'Emotional color grading',
+                    'Narrative audio mixing'
+                ],
+                icon: '📹'
+            },
+            {
+                id: 'social-media-viral',
+                name: 'Social Media Viral',
+                description: 'Optimized for social media platforms with viral potential. Designed for maximum engagement and shareability.',
+                price: 79,
+                creator: 'TikTok Pro',
+                category: 'social-media',
+                featured: false,
+                rating: 4.5,
+                sales: 312,
+                features: [
+                    'Platform-optimized formats',
+                    'Viral-style editing',
+                    'Trending effects',
+                    'Engagement hooks',
+                    'Mobile-first design'
+                ],
+                icon: '📲'
+            }
+        ];
+
+        // Populate marketplace
+        function populateMarketplace(styles = marketplaceStyles) {
+            const grid = document.getElementById('marketplaceGrid');
+            grid.innerHTML = '';
+
+            styles.forEach(style => {
+                const card = document.createElement('div');
+                card.className = `style-card ${style.featured ? 'featured' : ''}`;
+                
+                card.innerHTML = `
+                    <div class="style-icon">${style.icon}</div>
+                    <h3>${style.name}</h3>
+                    <p>${style.description}</p>
+                    <ul class="style-features">
+                        ${style.features.map(feature => `<li><i class="fas fa-check"></i>${feature}</li>`).join('')}
+                    </ul>
+                    <div class="style-price">$${style.price}</div>
+                    <div class="style-creator">by ${style.creator} • ⭐ ${style.rating} (${style.sales} sales)</div>
+                    <button class="btn btn-primary" onclick="purchaseStyle('${style.id}')">
+                        <i class="fas fa-shopping-cart"></i> Purchase Style
+                    </button>
+                    <button class="btn btn-secondary" onclick="previewStyle('${style.id}')" style="margin-top: 0.5rem;">
+                        <i class="fas fa-eye"></i> Preview
+                    </button>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active filter
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Filter styles
+                const filter = btn.dataset.filter;
+                const filteredStyles = filter === 'all' 
+                    ? marketplaceStyles 
+                    : marketplaceStyles.filter(style => style.category === filter);
+                
+                populateMarketplace(filteredStyles);
+            });
+        });
+
+        // Purchase functionality
+        function purchaseStyle(styleId) {
+            const style = marketplaceStyles.find(s => s.id === styleId);
+            if (style) {
+                alert(`🎉 Thank you for purchasing ${style.name}!\n\nYou will receive an email with download instructions and usage guidelines.`);
+                
+                // In a real implementation, this would:
+                // 1. Process payment
+                // 2. Send confirmation email
+                // 3. Provide download link
+                // 4. Update creator earnings
+            }
+        }
+
+        // Preview functionality
+        function previewStyle(styleId) {
+            const style = marketplaceStyles.find(s => s.id === styleId);
+            if (style) {
+                alert(`🎬 ${style.name} Preview\n\nThis style includes:\n${style.features.map(f => `• ${f}`).join('\n')}\n\nWould you like to see a sample video?`);
+            }
+        }
+
+        // Initialize marketplace
+        populateMarketplace();
+
+        // Update stats (in a real app, these would come from API)
+        function updateStats() {
+            document.getElementById('totalStyles').textContent = marketplaceStyles.length;
+            document.getElementById('totalCreators').textContent = new Set(marketplaceStyles.map(s => s.creator)).size;
+            document.getElementById('totalSales').textContent = marketplaceStyles.reduce((sum, s) => sum + s.sales, 0);
+            document.getElementById('avgRating').textContent = (marketplaceStyles.reduce((sum, s) => sum + s.rating, 0) / marketplaceStyles.length).toFixed(1);
+        }
+
+        updateStats();
+    </script>
+</body>
+</html>
